@@ -2,9 +2,10 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, Input
 from sklearn.metrics import r2_score
+from tensorflow.python.keras import activations
 
 # 1. 데이터
 datasets = load_diabetes()
@@ -39,15 +40,28 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
 
 # 2. 모델 구성
 
-model = Sequential()
-model.add(Dense(96, input_shape=(10,), activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(8, activation='relu'))  
-model.add(Dense(4, activation='relu'))           
-model.add(Dense(2, activation='relu'))          #활성화 함수
-model.add(Dense(1))
+input1 = Input(shape=(10,))
+dense1 = Dense(128, activation='relu')(input1)
+dense2 = Dense(64, activation='relu')(dense1)
+dense3 = Dense(32, activation='relu')(dense2)
+dense4 = Dense(16, activation='relu')(dense3)
+dense5 = Dense(8, activation='relu')(dense4)
+dense6 = Dense(4, activation='relu')(dense5)
+dense7 = Dense(2, activation='relu')(dense6)
+output1 = Dense(1)(dense7)
+
+model = Model(inputs=input1, outputs=output1)
+model.summary()
+
+# model = Sequential()
+# model.add(Dense(96, input_shape=(10,), activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(32, activation='relu'))
+# model.add(Dense(16, activation='relu'))
+# model.add(Dense(8, activation='relu'))  
+# model.add(Dense(4, activation='relu'))           
+# model.add(Dense(2, activation='relu'))          #활성화 함수
+# model.add(Dense(1))
 
 # 3. 컴파일, 훈련
 
@@ -65,23 +79,3 @@ y_predict = model.predict(x_test)
 
 r2 = r2_score(y_test, y_predict)
 print('r2는 :', r2)
-
-'''
-
-loss는 : 3308.3359375
-r2는 : 0.5337157987847735
-
-loss는 : 2418.124755859375
-r2는 : 0.5710359031333607
-
-loss는 : 3024.7998046875
-r2는 : 0.5831950785102884
-
-4/4 [==============================] - 0s 2ms/step - loss: 2257.9578
-loss는 : 2257.957763671875
-r2는 : 0.6555743360325862
-
-
-과제 1.
-0.62 까지 올릴것!!
-'''
