@@ -16,6 +16,8 @@ datasets = load_diabetes()
 x = datasets.data
 y = datasets.target
 
+print(x.shape)
+
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, 

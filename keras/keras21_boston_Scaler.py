@@ -2,9 +2,10 @@
 # 1. loss와 R2 평가를 함
 # Minmax와 Standard 결과들 명시
 
+from operator import mod
 import numpy as np
 import pandas as pd
-from sklearn.datasets import load_diabetes
+from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
@@ -12,7 +13,7 @@ from sklearn.metrics import r2_score
 from tensorflow.python.keras import activations
 
 # 1. 데이터
-datasets = load_diabetes()
+datasets = load_boston()
 x = datasets.data
 y = datasets.target
 
@@ -33,28 +34,9 @@ scaler.transform(x_test)
 # print(y[:1])
 # print(x.shape, y.shape) # (442, 10) (442,)
 
-# print(datasets.feature_names)
-# ['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-
-# print(datasets.DESCR)
-# :Attribute Information:
-#       - age     age in years - 나이
-#       - sex     - 성별
-#       - bmi     body mass index - 체질량 지수
-#       - bp      average blood pressure - 평균 혈압
-#       - s1      tc, T-Cells (a type of white blood cells)
-#       - s2      ldl, low-density lipoproteins
-#       - s3      hdl, high-density lipoproteins
-#       - s4      tch, thyroid stimulating hormone
-#       - s5      ltg, lamotrigine
-#       - s6      glu, blood sugar level
-
-# print(y[:30])
-# print(np.min(y), np.max(y))
-
 # 2. 모델 구성
 
-input1 = Input(shape=(10,))
+input1 = Input(shape=(13,))
 dense1 = Dense(128, activation='relu')(input1)
 dense2 = Dense(64, activation='relu')(dense1)
 dense3 = Dense(32, activation='relu')(dense2)
@@ -77,10 +59,14 @@ model.summary()
 # model.add(Dense(2, activation='relu'))          #활성화 함수
 # model.add(Dense(1))
 
+from tensorflow.keras.callbacks import EarlyStopping
+
 # 3. 컴파일, 훈련
 
+es = EarlyStopping(monitor='val_loss', mode='min', patience=30)
+
 model.compile(loss='mse', optimizer='adam', metrics='mae')
-model.fit(x_train, y_train, epochs=300, batch_size=8, shuffle=False, verbose=2)
+model.fit(x_train, y_train, epochs=300, validation_split=0.2, batch_size=8, shuffle=False, verbose=2, callbacks=es)
 
 # 4. 평가, 예측
 

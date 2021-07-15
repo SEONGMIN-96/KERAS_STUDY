@@ -2,6 +2,7 @@
 # 1. loss와 R2 평가를 함
 # Minmax와 Standard 결과들 명시
 
+from json import encoder
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_diabetes
@@ -19,12 +20,12 @@ y = datasets.target
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, 
-        train_size=0.75, shuffle=True, random_state=66)
+        train_size=0.8, shuffle=True)
 
 # scaler = MaxAbsScaler()
 # scaler = RobustScaler()
-# scaler = QuantileTransformer()
-scaler = PowerTransformer()
+scaler = QuantileTransformer()
+# scaler = PowerTransformer()
 # scaler = MinMaxScaler()
 scaler.fit(x_train)
 scaler.transform(x_train)
@@ -59,11 +60,7 @@ input1 = Input(shape=(10,))
 dense1 = Dense(128, activation='relu')(input1)
 dense2 = Dense(64, activation='relu')(dense1)
 dense3 = Dense(32, activation='relu')(dense2)
-dense4 = Dense(16, activation='relu')(dense3)
-dense5 = Dense(8, activation='relu')(dense4)
-dense6 = Dense(4, activation='relu')(dense5)
-dense7 = Dense(2, activation='relu')(dense6)
-output1 = Dense(1)(dense7)
+output1 = Dense(1)(dense3)
 
 model = Model(inputs=input1, outputs=output1)
 model.summary()
@@ -78,10 +75,15 @@ model.summary()
 # model.add(Dense(2, activation='relu'))          #활성화 함수
 # model.add(Dense(1))
 
+from tensorflow.keras.callbacks import EarlyStopping
+
 # 3. 컴파일, 훈련
 
+es = EarlyStopping(monitor='val_loss', patience=30, mode='min')
+
 model.compile(loss='mse', optimizer='adam', metrics='mae')
-model.fit(x_train, y_train, epochs=300, batch_size=8, shuffle=False, verbose=2)
+hist = model.fit(x_train, y_train, epochs=100, batch_size=8, shuffle=True, verbose=2, 
+                        validation_split=0.4, callbacks=[es])
 
 # 4. 평가, 예측
 
@@ -94,6 +96,33 @@ y_predict = model.predict(x_test)
 
 r2 = r2_score(y_test, y_predict)
 print('r2는 :', r2)
+
+# print(hist)
+# <tensorflow.python.keras.callbacks.History object at 0x00000176A4E12100>
+
+# print(hist.history.keys())
+# dict_keys(['loss', 'mae', 'val_loss', 'val_mae'])
+
+# print(hist.history['loss'])
+# print(hist.history['val_loss'])
+
+import matplotlib.pyplot as plt
+from matplotlib import font_manager, rc
+
+# plt.rcParams['axes.unicode_minus'] = False
+
+f_path = 'c:/Windows/Fonts/gulim.ttc'
+font_name = font_manager.FontProperties(fname=f_path).get_name()
+rc('font', family=font_name)
+
+plt.plot(hist.history['loss'], color='red')
+plt.plot(hist.history['val_loss'], color='blue')
+
+plt.title('로스, 발로스')
+plt.xlabel('epochs')
+plt.ylabel('loss, val_loss')
+plt.legend(['train_loss', 'val_loss'])
+plt.show()
 
 '''
 
@@ -124,3 +153,4 @@ loss는 : [3311.2529296875, 47.02490997314453]
 r2는 : 0.49930623819796494
 
 '''
+
