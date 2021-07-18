@@ -26,29 +26,20 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 
 model = Sequential()
-model.add(Conv2D(60, kernel_size=(3, 3), padding='same', activation='relu',
+model.add(Conv2D(100, kernel_size=(2, 2), padding='same', activation='relu',
                 input_shape=(32, 32, 3)))
-model.add(Conv2D(100, (3, 3), activation='relu', padding='same'))
-model.add(Conv2D(100, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
 model.add(MaxPool2D())
-model.add(Conv2D(90, (3, 3), activation='relu', padding='same'))
-model.add(Conv2D(90, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
 model.add(MaxPool2D())
-model.add(Conv2D(80, (3, 3), activation='relu', padding='same'))
-model.add(Conv2D(80, (3, 3), activation='relu', padding='same'))
-model.add(MaxPool2D())
-model.add(Conv2D(70, (3, 3), activation='relu', padding='same'))
-model.add(Conv2D(70, (3, 3), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
+model.add(Conv2D(100, (2, 2), activation='relu', padding='same'))
 model.add(MaxPool2D())
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(256, activation='relu'))
 model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 # 3. 컴파일, 훈련
@@ -57,11 +48,11 @@ model.add(Dense(100, activation='softmax'))
 
 from tensorflow.keras.callbacks import EarlyStopping
 
-es = EarlyStopping(monitor='val_loss', mode='min', patience=15)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=3)
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 model.fit(x_train, y_train, epochs=100, batch_size=256, verbose=1, callbacks=es,
-                validation_split=0.2, shuffle=True)
+                validation_split=0.001, shuffle=True)
 
 # 4. 평가, 예측
 
@@ -94,5 +85,20 @@ loss :  3.7693030834198
 acc :  0.2930000126361847
 
 batch_size = 256, Dense +1, Conv + 1
+
+loss :  4.0147705078125
+acc :  0.29789999127388
+
+validation_split = 0.005
+
+loss :  3.8053157329559326
+acc :  0.36579999327659607
+
+validation_split = 0.0025, patience = 3
+
+loss :  2.41078782081604
+acc :  0.39899998903274536
+
+validation_split = 0.001
 
 '''
