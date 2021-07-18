@@ -9,5 +9,5 @@ import matplotlib.pyplot as plt
 # print(x_test.shape) (10000, 32, 32, 3)
 # print(y_test.shape) (10000, 1)
 
-plt.imshow(x_train[50], 'gary')
+plt.imshow(x_train[50])
 plt.show()
