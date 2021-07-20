@@ -61,51 +61,20 @@ from sklearn.preprocessing import QuantileTransformer, PowerTransformer, Standar
 # print(x_train.shape, x_test.shape)
 # (3428, 11) (1470, 11)
 
-x_train = x_train.reshape(3428, 11, 1, 1)
-x_test = x_test.reshape(1470, 11, 1, 1)
+x_train = x_train.reshape(3428, 11, 1)
+x_test = x_test.reshape(1470, 11, 1)
 
 # 2. 모델 구성
 
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten
+from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, LSTM
 
 model = Sequential()
-model.add(Conv2D(64, kernel_size=(2, 2), activation='relu', input_shape=(11, 1, 1), padding='same'))
-model.add(Conv2D(128, (2, 2), activation='relu', padding='same'))
-model.add(Conv2D(256, (2, 2), activation='relu', padding='same'))
-model.add(Conv2D(128, (2, 2), activation='relu', padding='same'))
-model.add(Conv2D(64, (2, 2), activation='relu', padding='same'))
-model.add(Conv2D(64, (2, 2), activation='relu', padding='same'))
-model.add(Conv2D(32, (2, 2), activation='relu', padding='same'))
-model.add(Flatten())
+model.add(LSTM(32, input_shape=(11, 1), activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(7, activation='softmax'))
-
-# input1 = Input(shape=(11,))
-# dense1 = Dense(128, activation='relu')(input1)
-# dense2 = Dense(64, activation='relu')(dense1)
-# dense3 = Dense(64, activation='relu')(dense2)
-# dense4 = Dense(32, activation='relu')(dense3)
-# dense5 = Dense(32, activation='relu')(dense4)
-# output1 = Dense(16, activation='relu')(dense5)
-
-# input2 = Input(shape=(11,))
-# dense11 = Dense(64, activation='relu')(input2)
-# dense12 = Dense(32, activation='relu')(dense11)
-# dense13 = Dense(32, activation='relu')(dense12)
-# dense14 = Dense(32, activation='relu')(dense13)
-# dense15 = Dense(32, activation='relu')(dense14)
-# output2 = Dense(16, activation='relu')(dense15)
-
-# from tensorflow.keras.layers import concatenate, Concatenate
-
-# merge1 = concatenate([output1, output2])
-# merge2 = Dense(16)(merge1)
-# merge3 = Dense(16, activation='relu')(merge2)
-
-# last_output = Dense(7, activation='softmax')(merge3)
-
-# model = Model(inputs=[input1, input2], outputs=last_output)
-
 
 # 3. 컴파일, 훈련
 
@@ -153,6 +122,12 @@ after CNN
 loss : 1.1293832063674927
 acc : 0.5088435411453247
 소요 시간:  22.23252582550049
+
+after LSTM
+
+loss : 1.107799768447876
+acc : 0.5258503556251526
+소요 시간:  94.81492042541504
 
 '''
 
