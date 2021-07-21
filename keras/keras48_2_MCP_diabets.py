@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input, Conv1D, Flatten, LSTM
 from sklearn.metrics import r2_score
 from tensorflow.python.keras import activations
@@ -63,13 +63,15 @@ x_test = x_test.reshape(111, 10, 1)
 
 # 2. 모델 구성
 
-model = Sequential()
-model.add(Conv1D(64, 2, input_shape=(10, 1)))
-model.add(LSTM(units=64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(1))
+# model = Sequential()
+# model.add(Conv1D(64, 2, input_shape=(10, 1)))
+# model.add(LSTM(units=64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(1))
+
+model = load_model('./_save/ModelCheckPoint/keras48_2_diabets_MCP.hdf5')
 
 # 3. 컴파일, 훈련
 
@@ -84,10 +86,10 @@ cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 import time
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=50, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp], validation_split=0.2)
+# model.fit(x_train, y_train, epochs=50, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp], validation_split=0.2)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/keras48_2_diabets_model_save.h5')
+# model.save('./_save/ModelCheckPoint/keras48_2_diabets_model_save.h5')
 
 # 4. 평가, 예측
 

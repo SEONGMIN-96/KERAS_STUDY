@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPool2D, GlobalAveragePooling2D, LSTM, Conv1D
 from sklearn.metrics import r2_score
 from tensorflow.python.keras import activations
@@ -46,14 +46,16 @@ x_test = x_test.reshape(127, 13, 1)
 
 # 2. 모델 구성
 
-model = Sequential()
-# model.add(LSTM(units=16, input_shape=(13, 1), activation='relu'))
-model.add(Conv1D(32, 2, input_shape=(13, 1)))
-model.add(LSTM(64, return_sequences=True))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(1))
+# model = Sequential()
+# # model.add(LSTM(units=16, input_shape=(13, 1), activation='relu'))
+# model.add(Conv1D(32, 2, input_shape=(13, 1)))
+# model.add(LSTM(64, return_sequences=True))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(1))
+
+model = load_model('./_save/ModelCheckPoint/keras48_1_boston_MCP.hdf5')
 
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
@@ -67,10 +69,10 @@ cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 model.compile(loss='mse', optimizer='adam', metrics='mae')
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=100, validation_split=0.2, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp])
+# model.fit(x_train, y_train, epochs=100, validation_split=0.2, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp])
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/keras48_1_boston_model_save.h5')
+# model.save('./_save/ModelCheckPoint/keras48_1_boston_model_save.h5')
 
 # 4. 평가, 예측
 

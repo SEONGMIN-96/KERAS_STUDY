@@ -31,14 +31,16 @@ y_test = enc.fit_transform(y_test).toarray()
 
 # 2. 모델 구성
 
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPool2D, Dropout, LSTM, Conv1D
 
-model = Sequential()
-model.add(Conv1D(64, 2, input_shape=(2, 392)))
-model.add(LSTM(32, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(10, activation='softmax'))
+# model = Sequential()
+# model.add(Conv1D(64, 2, input_shape=(2, 392)))
+# model.add(LSTM(32, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(10, activation='softmax'))
+
+model = load_model('./_save/ModelCheckPoint/keras48_8_cifal10_MCP.hdf5')
 
 # 3. 컴파일, 훈련
 
@@ -54,11 +56,11 @@ cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=64, shuffle=True, validation_split=0.2,
-                    callbacks=[es, cp])
+# model.fit(x_train, y_train, epochs=100, batch_size=64, shuffle=True, validation_split=0.2,
+                    # callbacks=[es, cp])
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/keras48_8_cifal10_save_model.h5')
+# model.save('./_save/ModelCheckPoint/keras48_8_cifal10_save_model.h5')
 
 # 4. 평가, 예측
 

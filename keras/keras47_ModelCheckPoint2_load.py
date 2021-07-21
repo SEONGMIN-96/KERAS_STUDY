@@ -96,7 +96,6 @@ start_time = time.time()
 # model.fit(x_train, y_train, epochs=20, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp])
 end_time = time.time() - start_time
 
-model.load('./_save/ModelCheckPoint/keras47_MCP.hdf5')
 model.save('./_save/ModelCheckPoint/keras47_model_save.h5')
 
 # model.save('./_save/keras46_1_save_model_4.h5')

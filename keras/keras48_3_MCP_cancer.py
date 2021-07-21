@@ -42,13 +42,15 @@ x_test = x_test.reshape(114, 30, 1)
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, LSTM, Conv1D
 
-model = Sequential()
-model.add(Conv1D(64, 2, input_shape=(30 ,1)))
-model.add(LSTM(32, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(1, activation='sigmoid'))
+# model = Sequential()
+# model.add(Conv1D(64, 2, input_shape=(30 ,1)))
+# model.add(LSTM(32, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(1, activation='sigmoid'))
+
+model = load_model('./_save/ModelCheckPoint/keras48_3_cancer_MCP.hdf5')
 
 # 3. 컴파일, 훈련
 
@@ -65,10 +67,10 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 import time
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=50, batch_size=8, verbose=1, shuffle=True, validation_split=0.2, callbacks=[es, cp])
+# model.fit(x_train, y_train, epochs=50, batch_size=8, verbose=1, shuffle=True, validation_split=0.2, callbacks=[es, cp])
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/keras48_3_caner_model_save.h5')
+# model.save('./_save/ModelCheckPoint/keras48_3_caner_model_save.h5')
 
 # 평가, 예측
 

@@ -1,6 +1,7 @@
 from tensorflow.keras.datasets import cifar100
 import numpy as np
 import matplotlib.pyplot as plt
+from tensorflow.python.keras.saving.save import load_model
 
 # 1. 데이터
 
@@ -34,13 +35,15 @@ y_test = ecd.fit_transform(y_test).toarray()
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout, GlobalAveragePooling2D, LSTM, MaxPooling1D, MaxPool1D, Conv1D
 
-model = Sequential()
-model.add(Conv1D(32, 2, input_shape=(2, 1536)))
-model.add(LSTM(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(100, activation='softmax'))
+# model = Sequential()
+# model.add(Conv1D(32, 2, input_shape=(2, 1536)))
+# model.add(LSTM(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(100, activation='softmax'))
+
+model = load_model('./_save/ModelCheckPoint/keras48_9_cifal100_MCP.hdf5')
 
 # 3. 컴파일, 훈련
 
@@ -56,40 +59,41 @@ cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=128, verbose=1, callbacks=[es, cp],
-                validation_split=0.025, shuffle=True)
+# hist = model.fit(x_train, y_train, epochs=100, batch_size=128, verbose=1, callbacks=[es, cp],
+#                 validation_split=0.025, shuffle=True)
 end_time = ( time.time() - start_time ) / 60
 
-model.save('./_save/ModelCheckPoint/keras48_9_cifal100_save_model.h5')
+
+# model.save('./_save/ModelCheckPoint/keras48_9_cifal100_save_model.h5')
 
 # 4. 평가, 예측
 
 loss = model.evaluate(x_test, y_test, batch_size=64)
 
-# 5. plt 시각화
+# # 5. plt 시각화
 
-import matplotlib.pyplot as plt
-plt.figure(figsize=(9,5))
+# import matplotlib.pyplot as plt
+# plt.figure(figsize=(9,5))
 
-# 1)
-plt.subplot(2,1,1)
-plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
-plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
-plt.grid()
-plt.title('loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(loc='upper right')
+# # 1)
+# plt.subplot(2,1,1)
+# plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
+# plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
+# plt.grid()
+# plt.title('loss')
+# plt.ylabel('loss')
+# plt.xlabel('epoch')
+# plt.legend(loc='upper right')
 
-# 2)
-plt.subplot(2,1,2)
-plt.plot(hist.history['acc'])
-plt.plot(hist.history['val_acc'])
-plt.grid()
-plt.title('acc')
-plt.ylabel('acc')
-plt.xlabel('epoch')
-plt.legend(['acc', 'val_acc'])
+# # 2)
+# plt.subplot(2,1,2)
+# plt.plot(hist.history['acc'])
+# plt.plot(hist.history['val_acc'])
+# plt.grid()
+# plt.title('acc')
+# plt.ylabel('acc')
+# plt.xlabel('epoch')
+# plt.legend(['acc', 'val_acc'])
 
 
 
