@@ -32,10 +32,11 @@ y_test = enc.fit_transform(y_test).toarray()
 # 2. 모델 구성
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPool2D, Dropout, LSTM
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPool2D, Dropout, LSTM, Conv1D
 
 model = Sequential()
-model.add(LSTM(32, input_shape=(2, 392), activation='relu'))
+model.add(Conv1D(64, 2, input_shape=(2, 392)))
+model.add(LSTM(32, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
@@ -43,22 +44,26 @@ model.add(Dense(10, activation='softmax'))
 
 # 3_1. EarlyStopping
 
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 
 es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
+cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
+            filepath='./_save/ModelCheckPoint/keras48_8_cifal10_MCP.hdf5')
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=16, shuffle=True, validation_split=0.2,
-                    callbacks=es)
+model.fit(x_train, y_train, epochs=100, batch_size=64, shuffle=True, validation_split=0.2,
+                    callbacks=[es, cp])
 end_time = time.time() - start_time
+
+model.save('./_save/ModelCheckPoint/keras48_8_cifal10_save_model.h5')
 
 # 4. 평가, 예측
 
 loss = model.evaluate(x_test, y_test)
-
+    
 print('loss는 :', loss[0])
 print('acc는 :', loss[1])
 print('걸린시간(분) : ', end_time / 60)
@@ -93,5 +98,11 @@ after LSTM
 loss는 : 2.2807400226593018
 acc는 : 0.12929999828338623
 걸린시간(분) :  33.237756768862404
+
+after Conv1D
+
+loss는 : 0.2598702013492584
+acc는 : 0.9337999820709229
+걸린시간(분) :  4.845967352390289
 
 '''
