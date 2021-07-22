@@ -39,12 +39,14 @@ print("x_predict : \n", x_predict)
 from sklearn.model_selection import train_test_split
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-                            train_size=0.8, shuffle=True, random_state=66)
+                            train_size=0.8, shuffle=False)
 
 print(x_train.shape, x_test.shape, x_predict.shape)  # (76, 4) (20, 4) (6, 4)
 
 x_train = x_train.reshape(76, 4, 1)
 x_test = x_test.reshape(20, 4, 1)
+
+print(x_train)
 
 x_predict = x_predict.reshape(6, 4, 1)
 
@@ -65,7 +67,7 @@ model = Sequential()
 # model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
 model.add(Conv1D(64, 2, input_shape=(4, 1)))
 # model.add(Flatten())
-model.add(LSTM())
+model.add(LSTM(64))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(128, activation='relu'))

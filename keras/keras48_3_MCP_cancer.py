@@ -39,7 +39,7 @@ x_test = x_test.reshape(114, 30, 1)
 
 # 2. 모델 구성
 
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, LSTM, Conv1D
 
 # model = Sequential()

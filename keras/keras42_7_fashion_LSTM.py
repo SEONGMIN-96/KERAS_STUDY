@@ -23,7 +23,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 ecd = OneHotEncoder()
 y_train = ecd.fit_transform(y_train).toarray()
-y_test = ecd.fit_transform(y_test).toarray()
+y_test = ecd.transform(y_test).toarray()
 
 # 2. 모델 구성
 

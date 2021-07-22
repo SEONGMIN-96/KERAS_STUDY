@@ -11,6 +11,7 @@ from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, LSTM
 from sklearn.metrics import r2_score
 from tensorflow.python.keras import activations
 
+
 # 1. 데이터
 datasets = load_diabetes()
 x = datasets.data
@@ -70,7 +71,7 @@ x_test = x_test.reshape(111, 10, 1)
 # model.add(Dense(64, activation='relu'))
 # model.add(Dense(1))
 
-model = load_model('./_save/ModelCheckPoint/keras47_model_save.h5')
+model = load_model('./_save/ModelCheckPoint/keras47_MCP.hdf5')
 
 model.summary()
 
@@ -93,10 +94,10 @@ cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 import time
 
 start_time = time.time()
-# model.fit(x_train, y_train, epochs=20, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp])
+# model.fit(x_train, y_train, epochs=20, batch_size=8, shuffle=False, verbose=1, callbacks=[es, cp], validation_split=0.2)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/keras47_model_save.h5')
+# model.save('./_save/ModelCheckPoint/keras47_model_save.h5')
 
 # model.save('./_save/keras46_1_save_model_4.h5')
 # model.save_weights('./_save/keras46_1_save_weight_2.h5')
