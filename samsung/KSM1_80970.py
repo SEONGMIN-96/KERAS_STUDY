@@ -88,49 +88,49 @@ from tensorflow.keras.layers import Dense, Flatten, Dropout, LSTM , Conv1D, Inpu
 
 # 2_1. ensemble
 
-# input1 = Input(shape=(5, 5))
-# qq = Conv1D(64, kernel_size=5)(input1)
-# qq = Dense(64, activation='relu')(qq)
-# qq = Dense(128, activation='relu')(qq)
-# qq = Dropout(0.2)(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dropout(0.2)(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dense(128, activation='relu')(qq)
-# qq = Dense(64, activation='relu')(qq)
-# output1 = Dense(16, activation='relu')(qq)
+input1 = Input(shape=(5, 5))
+qq = Conv1D(64, kernel_size=5)(input1)
+qq = Dense(64, activation='relu')(qq)
+qq = Dense(128, activation='relu')(qq)
+qq = Dropout(0.2)(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dropout(0.2)(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dense(128, activation='relu')(qq)
+qq = Dense(64, activation='relu')(qq)
+output1 = Dense(16, activation='relu')(qq)
 
-# input2 = Input(shape=(5, 5))
-# qq = Conv1D(64, kernel_size=5)(input2)
-# qq = Dense(64, activation='relu')(qq)
-# qq = Dense(128, activation='relu')(qq)
-# qq = Dropout(0.2)(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dropout(0.2)(qq)
-# qq = Dense(256, activation='relu')(qq)
-# qq = Dense(64, activation='relu')(qq)
-# qq = Dense(32, activation='relu')(qq)
-# output2 = Dense(16, activation='relu')(qq)
+input2 = Input(shape=(5, 5))
+qq = Conv1D(64, kernel_size=5)(input2)
+qq = Dense(64, activation='relu')(qq)
+qq = Dense(128, activation='relu')(qq)
+qq = Dropout(0.2)(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dropout(0.2)(qq)
+qq = Dense(256, activation='relu')(qq)
+qq = Dense(64, activation='relu')(qq)
+qq = Dense(32, activation='relu')(qq)
+output2 = Dense(16, activation='relu')(qq)
 
-# from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import concatenate
 
-# merge1 = concatenate([output1, output2])
-# qq = Dense(32, activation='relu')(merge1)
-# qq = Dense(16, activation='relu')(qq)
-# qq = Dense(8, activation='relu')(qq)
-# last_output = Dense(1)(qq)
+merge1 = concatenate([output1, output2])
+qq = Dense(32, activation='relu')(merge1)
+qq = Dense(16, activation='relu')(qq)
+qq = Dense(8, activation='relu')(qq)
+last_output = Dense(1)(qq)
 
-# model = Model(inputs=[input1, input2], outputs=last_output)
+model = Model(inputs=[input1, input2], outputs=last_output)
 
 import time
 
-start_time = time.time()
-filepath = './_save/samsung/day1/'
-fname = 'samsung0723_0259_.0011-47753212.0000.hdf5'
-model = load_model(filepath + fname)
-end_time = time.time() - start_time
+# start_time = time.time()
+# filepath = './_save/samsung/day2/'
+# fname = 'samsung0723_0255_.0010-26646704.0000.hdf5'
+# model = load_model(filepath + fname)
+# end_time = time.time() - start_time
 
 model.summary()
 
@@ -146,7 +146,7 @@ import datetime
 date = datetime.datetime.now()
 date_time = date.strftime("%m%d_%H%M")
 
-filepath = './_save/samsung/day1/'
+filepath = './_save/samsung/day2/'
 filename = '.{epoch:04d}-{loss:.4f}.hdf5'
 modelpath = "".join([filepath, "samsung", date_time, "_", filename])
 
@@ -170,7 +170,7 @@ results = model.predict([x1_predict, x2_predict])
 
 print('소요 시간 : ', end_time)
 print('loss : ', loss)
-print('예상주가 :', results[0])
+print('예상주가 :', results[1])
 
 '''
 
