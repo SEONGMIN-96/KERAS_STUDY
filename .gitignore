@@ -145,7 +145,7 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 # manually ignored
-._save/
-._data/
-.dacon/
-.samsung01/_save/
+_save/
+_data/
+dacon/
+samsung01/_save/
