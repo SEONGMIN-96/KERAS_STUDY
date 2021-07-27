@@ -148,3 +148,4 @@ cython_debug/
 ._save/
 ._data/
 .dacon/
+.samsung01/_save/
