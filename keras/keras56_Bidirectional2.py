@@ -37,13 +37,14 @@ print(np.unique(pad_x))
 # 2. 모델 구성
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Embedding, LSTM
+from tensorflow.keras.layers import Dense, Embedding, LSTM, Bidirectional
 
 model = Sequential()
                 # 단어사전의 개수  아웃풋 노드 개수  단어수, 길이
 # model.add(Embedding(input_dim=28, output_dim=11, input_length=5))
 model.add(Embedding(28, 77))
 model.add(LSTM(32))
+model.add(Bidirectional(LSTM(32)))
 model.add(Dense(1, activation='sigmoid'))
 
 model.summary()
@@ -73,3 +74,9 @@ model.fit(pad_x, labels, epochs=100, batch_size=8)
 
 acc = model.evaluate(pad_x, labels)[1]
 print("acc : ", acc)
+
+'''
+
+
+
+'''

@@ -57,7 +57,8 @@ from tensorflow.keras.layers import Dense, LSTM, Embedding
 
 model = Sequential()
 model.add(Embedding(100, 64))
-model.add(LSTM(32, activation='relu'))
+model.add(LSTM(32))
+model.add(Dense(64))
 model.add(Dense(46, activation='softmax'))
 
 model.summary()
