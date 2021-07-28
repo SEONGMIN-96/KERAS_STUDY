@@ -24,6 +24,7 @@ print(y)
 from tensorflow.keras.utils import to_categorical
 
 y = to_categorical(y)
+print('yddd',y.shape)
 
 from sklearn.model_selection import train_test_split
 
