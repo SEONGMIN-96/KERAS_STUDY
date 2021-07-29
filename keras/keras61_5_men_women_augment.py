@@ -1,17 +1,22 @@
+# 훈련데이터를 기존데이터 20% 더 할것
+# 완료후 기존 모델과 비교
+# save_dir도 temp에 넣을 것
+# 확인 후, 삭제
+
 # 실습
 # men women 데이터로 모델링을 구성할 것 !!
 
 # 실습 2.
 # 본인 사진으로 predict 하시오!!
 
-from re import I, T
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.python.keras.layers.pooling import MaxPooling2D
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
 
 # # 1. 데이터
 
@@ -60,6 +65,38 @@ person_datagen = ImageDataGenerator(
 x_data = np.load('./_save/_npy/k59_5_men_women_x.npy')
 y_data = np.load('./_save/_npy/k59_5_men_women_y.npy')
 
+datagen = ImageDataGenerator(
+    rescale=1./255,
+    horizontal_flip=True,
+    vertical_flip=False,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    rotation_range=5,
+    zoom_range=0.1,
+    shear_range=0.5,
+    fill_mode='nearest',
+)
+
+# 1. ImageDataGenerator를 정의                      // x,y가 튜플 형태로 뭉쳐있음
+# 2. 파일에서 땡겨오려면 -> flow_from_directory()   // x,y가 나눠있음
+# 3. 데이터에서 땡겨오려면 -> flow()
+
+augment_size = (x_data.shape[0] * 20 // 100)        # 추가할 데이터의 수를 맞춰준다.
+
+randidx = np.random.randint(x_data.shape[0], size=augment_size)
+print(x_data.shape[0])      # 3309
+print(randidx)              # [39310 38997 11928 ... 40079 44541 58382]
+print(randidx.shape)        # (681,)
+
+x_augmented = x_data[randidx].copy()
+y_augmented = y_data[randidx].copy()
+
+x_data = np.concatenate((x_data, x_augmented))
+y_data = np.concatenate((y_data, y_augmented))
+print(x_data.shape)
+
+# 데이터 증폭 후, 기존의 데이터에 더해준다.
+
 # train_test_split 활용
 
 x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
@@ -86,7 +123,7 @@ model = Sequential()
 model.add(Conv2D(filters=128, kernel_size=(2,2), input_shape=(150, 150, 3), padding='same'))
 model.add(MaxPooling2D())
 model.add(Flatten())
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 model.summary()
@@ -120,5 +157,11 @@ predict : [[0.01550011]]
 val_loss : 1.4559051990509033
 val_acc : 0.6027190089225769
 predict : [[0.53685796]]
+
+after augment 
+데이터가 커지면서 긍정적인 효과보임.
+val_loss : 1.3622854948043823
+val_acc : 0.6649873852729797
+predict : [[0.23311535]]
 
 '''
