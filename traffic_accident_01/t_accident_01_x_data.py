@@ -64,7 +64,7 @@ def to_float(a):
     return np.array(aaa)
 data = to_float(data)
 
-data_rain = data
+data_rain = data.reshape(4018,1)
 
 # 강수량 데이터 배열화 완료.
 
@@ -96,7 +96,7 @@ def to_float(a):
     return np.array(aaa)
 data = to_float(data)
 
-data_temp = data
+data_temp = data.reshape(4018,1)
 
 # 기온 데이터 배열화 완료.
 
@@ -128,7 +128,7 @@ def to_float(a):
     return np.array(aaa)
 data = to_float(data)
 
-data_wind = data
+data_wind = data.reshape(4018,1)
 
 # 바람 데이터 배열화 완료.
 
@@ -160,7 +160,21 @@ def to_float(a):
     return np.array(aaa)
 data = to_float(data)
 
-data_humidity = data
+data_humidity = data.reshape(4018,1)
 
 # 습도 데이터 배열화 완료.
 
+# 기상 데이터 병합
+
+print(data_rain[0],data_wind[0],data_temp[0],data_humidity[0])
+print(data_rain.shape,data_wind.shape,data_temp.shape,data_humidity.shape)
+
+x_data = np.concatenate((data_rain,data_wind,data_temp,data_humidity), axis=1)
+
+print(x_data)
+print(x_data.shape) # (4018, 4)
+print(type(x_data[0][0]))
+
+# npy 저장
+
+np.save('./_save/_npy/t_accident_x_data.npy', arr=x_data)
