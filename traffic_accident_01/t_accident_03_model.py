@@ -22,7 +22,7 @@ y_data = np.load('./_save/_npy/t_accident_y_data.npy').astype(float)
 print(x_data.shape)
 print(y_data.shape)
 
-x_data = x_data.reshape(4018, 4, 1)
+x_data = x_data#.reshape(4018, 4, 1)
 
 # train_test_split
 
@@ -35,27 +35,41 @@ print(x_test.shape)
 # 2. 모델구성
 
 model = Sequential()
-model.add(LSTM(64, input_shape=(4, 1), return_sequences=True))
-model.add(Bidirectional(LSTM(64, activation='relu', return_sequences=True)))
-model.add(Conv1D(128, 2, activation='relu', padding='same'))
-model.add(MaxPool1D())
-model.add(Conv1D(128, 2, activation='relu', padding='same'))
-model.add(Flatten())
+model.add(Dense(64, input_shape=(4,)))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.3))
-model.add(Dense(512, activation='same'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dropout(0.3))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.3))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(3))
+
+model.summary()
 
 # 3. 컴파일, 훈련
 
 es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
 
-model.compile(loss='mse', optimizer='adam', metrics='acc')
+model.compile(loss='mse', optimizer='adam', metrics='mae')
 model.fit(x_train, y_train, epochs=500, batch_size=16, verbose=1, validation_split=0.2,
             callbacks=[es])
 
 # 4. 평가 예측
 
-loss = model.evaluate(x_test, y_test)s
+loss = model.evaluate(x_test, y_test)
+
+x_predict = np.array([[1.0, 1.0, 1.0, 1.0]])
+
+results = model.predict(x_predict)
 
 print('val_loss : ',loss[0])
-print('val_acc : ',loss[1])
+print('val_mae : ',loss[1])
+print('results : ',results)
+
+
