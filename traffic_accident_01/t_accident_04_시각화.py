@@ -355,7 +355,7 @@ target_b = date_data[target_b].reshape(12*31,1)
 print(target_b.shape)
 target_c = date_data[target_c].reshape(12*31,1)
 print(target_c.shape)
-print(target_b)
+
 y_data_2013 = np.concatenate((target_a,target_b,target_c), axis=1)
 print(y_data_2013.shape)
 print(y_data_2013)
@@ -367,7 +367,6 @@ print(bad_num)
 
 y_data_2013 = pd.DataFrame(y_data_2013)
 y_data_2013 = y_data_2013.drop(bad_num[0])
-
 print(y_data_2013)
 print(y_data_2013.shape)
 
@@ -714,4 +713,228 @@ print(type(y_data[0][0]))
 
 # np.save('./_save/_npy/t_accident_y_data.npy', arr=y_data)
 
+# 5. 시각화
 
+x_df = pd.DataFrame(x_data)
+y_df = pd.DataFrame(y_data)
+# y_df.to_csv('./_save/_csv/y_df.csv')
+
+# 시간 데이터를 얻기
+
+f = open(file_path+file_humidity, 'r', encoding='cp949')
+data = list(csv.reader(f, delimiter=','))
+data = data[12:len(data)]
+
+df = pd.DataFrame(data[5:4023])
+df[2] = pd.to_datetime(df[2])   # 2010~2020
+print(df[2])
+
+# 한글 및 특수문자
+
+plt.rcParams['font.family'] = 'Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
+
+# plt.figure(figsize=(10,5))
+# plt.subplot(211)
+# ax_1, ax_2 = plt.gca(), plt.gca().twinx()
+# plt.title('강수, 풍속')
+# ax_1.plot(df[2],data_rain, color='blue', label='강수량(mm)')
+# ax_1.set_ylabel('강수량(mm)')
+# ax_2.plot(df[2],data_wind, color='red', label='풍속(m/s)')
+# ax_2.set_ylabel('풍속(m/s)')
+# ax_1.legend(loc=0)
+# ax_2.legend(loc=0)
+
+# 강수, 풍속, 기온, 습도 시각화
+
+# fig = plt.figure(figsize=(10,5))
+# ax = fig.add_subplot(111)
+# plt.title('강수, 풍속, 기온, 습도')
+# lns1 = ax.plot(df[2],data_rain, '-', color='blue', label='강수량(mm)')
+# plt.ylabel('강수량(mm)')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_wind, '-', color='red', alpha=0.8, label='풍속(m/s)')
+# plt.ylabel('풍속(m/s)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# ax = fig.add_subplot(212)
+# lns1 = ax.plot(df[2],data_temp, '-', color='coral', label='기온(ºC)')
+# plt.ylabel('기온(ºC)')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_humidity, '-', color='orange', alpha=0.8, label='습도(%\rrh)')
+# plt.ylabel('습도(%\rrh)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# plt.show()
+
+# 사고발생량, 사망자수, 부상자수 시각화
+
+# fig = plt.figure(figsize=(10,5))
+# ax = fig.add_subplot(311)
+# plt.title('사고발생량, 사망자수, 부상자수')
+# lns = ax.plot(df[2], y_df[0], '-', color='blue', label='사고발생량')
+# plt.ylabel('사고발생량')
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# ax = fig.add_subplot(312)
+# lns = ax.plot(df[2], y_df[1], '-', color='orange', label='사망자수')
+# plt.ylabel('사망자수')
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# ax = fig.add_subplot(313)
+# lns = ax.plot(df[2], y_df[2], '-', color='coral', label='부상자수')
+# plt.ylabel('부상자수')
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# plt.show()
+
+# 기상조건에대한 사고발생량, 사망자수, 부상자수
+
+# fig = plt.figure(figsize=(20,14))
+# ax = fig.add_subplot(311)
+# plt.title('강수량에 따른 교통사고 발생')
+# lns1 = ax.plot(df[2],y_df[0], '-', color='blue', label='사고발생량')
+# plt.ylabel('사고발생량')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_rain, '-', color='red', alpha=0.8, label='강수량(mm)')
+# plt.ylabel('강수량(mm)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# ax = fig.add_subplot(312)
+# lns1 = ax.plot(df[2],y_df[1], '-', color='orange', label='사망자수')
+# plt.ylabel('사망자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_rain, '-', color='red', alpha=0.8, label='강수량(mm)')
+# plt.ylabel('강수량(mm)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# ax = fig.add_subplot(313)
+# lns1 = ax.plot(df[2],y_df[2], '-', color='coral', label='부상자수')
+# plt.ylabel('부상자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_rain, '-', color='red', alpha=0.8, label='강수량(mm)')
+# plt.ylabel('강수량(mm)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc=0)
+
+# plt.show()
+
+#################################################
+
+# fig = plt.figure(figsize=(20,14))
+# ax = fig.add_subplot(311)
+# plt.title('기온변화에 따른 교통사고 발생')
+# lns1 = ax.plot(df[2],y_df[0], '-', color='blue', label='사고발생량')
+# plt.ylabel('사고발생량')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_temp, '-', color='red', alpha=0.8, label='기온(ºC)')
+# plt.ylabel('기온(ºC)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# ax = fig.add_subplot(312)
+# lns1 = ax.plot(df[2],y_df[1], '-', color='orange', label='사망자수')
+# plt.ylabel('사망자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_temp, '-', color='red', alpha=0.8, label='기온(ºC)')
+# plt.ylabel('기온(ºC))')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# ax = fig.add_subplot(313)
+# lns1 = ax.plot(df[2],y_df[2], '-', color='coral', label='부상자수')
+# plt.ylabel('부상자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_temp, '-', color='red', alpha=0.8, label='기온(ºC)')
+# plt.ylabel('기온(ºC)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# plt.show()
+
+#################################################
+
+# fig = plt.figure(figsize=(20,14))
+# ax = fig.add_subplot(311)
+# plt.title('풍속변화에 따른 교통사고 발생')
+# lns1 = ax.plot(df[2],y_df[0], '-', color='blue', label='사고발생량')
+# plt.ylabel('사고발생량')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_wind, '-', color='red', alpha=0.8, label='풍속(m/s)')
+# plt.ylabel('풍속(m/s)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# ax = fig.add_subplot(312)
+# lns1 = ax.plot(df[2],y_df[1], '-', color='orange', label='사망자수')
+# plt.ylabel('사망자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_wind, '-', color='red', alpha=0.8, label='풍속(m/s)')
+# plt.ylabel('풍속(m/s)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# ax = fig.add_subplot(313)
+# lns1 = ax.plot(df[2],y_df[2], '-', color='coral', label='부상자수')
+# plt.ylabel('부상자수')
+# ax2 = ax.twinx()
+# lns2 = ax2.plot(df[2],data_wind, '-', color='red', alpha=0.8, label='풍속(m/s)')
+# plt.ylabel('풍속(m/s)')
+# lns = lns1 + lns2
+# labs = [l.get_label() for l in lns]
+# ax.legend(lns, labs, loc='best')
+
+# plt.show()
+
+################################################
+
+fig = plt.figure(figsize=(20,14))
+ax = fig.add_subplot(311)
+plt.title('습도변화에 따른 교통사고 발생')
+lns1 = ax.plot(df[2],y_df[0], '-', color='blue', label='사고발생량')
+plt.ylabel('사고발생량')
+ax2 = ax.twinx()
+lns2 = ax2.plot(df[2],data_humidity, '-', color='red', alpha=0.8, label='습도(%\rrh)')
+plt.ylabel('습도(%\rrh)')
+lns = lns1 + lns2
+labs = [l.get_label() for l in lns]
+ax.legend(lns, labs, loc='best')
+
+ax = fig.add_subplot(312)
+lns1 = ax.plot(df[2],y_df[1], '-', color='orange', label='사망자수')
+plt.ylabel('사망자수')
+ax2 = ax.twinx()
+lns2 = ax2.plot(df[2],data_humidity, '-', color='red', alpha=0.8, label='습도(%\rrh)')
+plt.ylabel('습도(%\rrh)')
+lns = lns1 + lns2
+labs = [l.get_label() for l in lns]
+ax.legend(lns, labs, loc='best')
+
+ax = fig.add_subplot(313)
+lns1 = ax.plot(df[2],y_df[2], '-', color='coral', label='부상자수')
+plt.ylabel('부상자수')
+ax2 = ax.twinx()
+lns2 = ax2.plot(df[2],data_humidity, '-', color='red', alpha=0.8, label='습도(%\rrh)')
+plt.ylabel('습도(%\rrh)')
+lns = lns1 + lns2
+labs = [l.get_label() for l in lns]
+ax.legend(lns, labs, loc='best')
+
+plt.show()

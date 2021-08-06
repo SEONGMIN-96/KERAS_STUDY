@@ -35,10 +35,34 @@ f = open(file_path+file_rain, 'r', encoding='cp949')
 data = list(csv.reader(f, delimiter=','))
 data = data[12:len(data)]
 
+xx = np.array(range(3652))
+yy = np.array(range(3652,4018))
+
 df = pd.DataFrame(data[1:4019])
 print(df.loc[:,[2,3]])
 df = df.loc[:,[3]]
+
+#########################################
+
 print(df.info())
+
+'''
+
+[4018 rows x 2 columns]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 4018 entries, 0 to 4017
+Data columns (total 1 columns):
+ #   Column  Non-Null Count  Dtype
+---  ------  --------------  -----
+ 0   3       4018 non-null   object
+dtypes: object(1)
+memory usage: 31.5+ KB
+None
+
+'''
+
+#########################################
+
 data = np.array(df)
 print(data.shape) # (4018, 1)
 print(type(data[1][0])) # <class 'str'>
@@ -53,7 +77,6 @@ data = np.array(df)
 print(type(data[0][0]))
 print(data[0].shape)
 print(data[19][0])
-# data = float(data[19][0])
 # print(data)
 
 def to_float(a):
@@ -65,10 +88,11 @@ def to_float(a):
 data = to_float(data)
 
 data_rain = data.reshape(4018,1)
+print(data_rain)
 
 # 강수량 데이터 배열화 완료.
 
-# 기온
+# # 기온
 
 f = open(file_path+file_temp, 'r', encoding='cp949')
 data = list(csv.reader(f, delimiter=','))
@@ -146,7 +170,7 @@ data = np.array(df)
 print(data) # 
 print(type(data[1][0])) # <class 'str'>
 
-# 데이터를 str -> int
+# 데이터를 str -> float
 
 data_empty = np.where(data == '')
 df.loc[data_empty[0],:] = '0'
@@ -164,7 +188,7 @@ data_humidity = data.reshape(4018,1)
 
 # 습도 데이터 배열화 완료.
 
-# 기상 데이터 병합
+# 기상 데이터 
 
 print(data_rain[0],data_wind[0],data_temp[0],data_humidity[0])
 print(data_rain.shape,data_wind.shape,data_temp.shape,data_humidity.shape)
@@ -173,8 +197,25 @@ x_data = np.concatenate((data_rain,data_wind,data_temp,data_humidity), axis=1)
 
 print(x_data)
 print(x_data.shape) # (4018, 4)
-print(type(x_data[0][0]))
 
 # npy 저장
 
 np.save('./_save/_npy/t_accident_x_data.npy', arr=x_data)
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+x_data = pd.DataFrame(x_data)
+
+# def make_corr(file):
+#     corr = file.corr()
+#     print(corr)
+
+#     sns.heatmap(corr, cmap='virdis', annot=True)
+#     plt.show()
+
+# make_corr(x_data)
+
+corr_df = x_data.corr()
+corr_df = corr_df.apply(lambda x: round(x, 2))
+print(corr_df)
