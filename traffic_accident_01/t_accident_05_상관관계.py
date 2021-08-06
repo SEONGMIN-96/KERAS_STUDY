@@ -60,4 +60,5 @@ for x in range(len(corr_df.columns)):
         ax.text(y, x, corr_df.iloc[y, x], ha='center', va='center', color='g')
 
 fig.tight_layout()
+
 plt.show()
