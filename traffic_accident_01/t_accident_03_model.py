@@ -14,7 +14,7 @@ from tensorflow.python.keras.layers.pooling import MaxPooling1D
 
 # 1. 데이터
 
-# picle 
+# pickle 
  
 np_load_old = np.load
 np.load = lambda *a,**k:np_load_old(*a, allow_pickle=True,**k)

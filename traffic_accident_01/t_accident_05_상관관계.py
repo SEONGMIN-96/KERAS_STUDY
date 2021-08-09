@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False
 
+# pickle
+
 np_load_old = np.load
 np.load = lambda *a,**k:np_load_old(*a, allow_pickle=True,**k)
 
@@ -22,7 +24,7 @@ print(y_data.shape)
 x_df = pd.DataFrame(x_data)
 y_df = pd.DataFrame(y_data)
 
-x_df = x_df.rename(columns={0:"강수량", 1:"바람", 2:"기온", 3:"습도"})
+x_df = x_df.rename(columns={0:"강수량", 1:"기온", 2:"바람", 3:"습도"})
 y_df = y_df.rename(columns={0:"사고발생량",1:"사망자수",2:"부상자수"})
 
 ship_df = pd.concat([x_df,y_df],axis=1)
