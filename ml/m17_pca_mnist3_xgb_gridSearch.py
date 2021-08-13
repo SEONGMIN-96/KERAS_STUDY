@@ -55,9 +55,8 @@ parameters = [
 n_jobs = -1
 
 start_time = time.time()
-model = GridSearchCV(XGBClassifier(), parameters, n_jobs=n_jobs, cv=kflod, verbose=1)
+model = RandomizedSearchCV(XGBClassifier(), parameters, n_jobs=n_jobs, cv=kflod, verbose=1)
 model.fit(x_train, y_train)
-
 end_time = time.time() - start_time
 
 
