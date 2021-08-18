@@ -19,6 +19,7 @@ print(word_size)        # 7
 x = to_categorical(x)
 
 print(x)
+print(x.shape)
 # [[[0. 0. 0. 1. 0. 0. 0. 0.]
 #   [0. 1. 0. 0. 0. 0. 0. 0.]
 #   [0. 0. 0. 0. 1. 0. 0. 0.]
