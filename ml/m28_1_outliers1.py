@@ -2,6 +2,8 @@
 # 1. 삭제
 # 2. Nan처리 후 -> 보간 / linear
 # 3.      ................ (결측치 처리 방법 유사)
+# 4. scaler -> Rubsorsclaer, QuantileTransformer ... 등등
+# 5. 모델링 : tree 계열 ... DT, RF, XG, LGBM.....
 
 import numpy as np
 
