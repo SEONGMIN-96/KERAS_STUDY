@@ -1,12 +1,15 @@
 # 실습 : 다차원의 outlier가 출력되도록 함수 수정
 
 import numpy as np
+import random
 
 aaa = np.array([[1,    2,    10000, 3,    4,    6,    7,    8, 90,   100,   5000],
-                [1000, 2000, 3,     4000, 5000, 6000, 7000, 8, 9000, 10000, 1001]])
+                [1000, 2000, 3,     4000, 5000, 6000, 7000, 8, 9000, 10000, 1001],
+                [100,  200,  3000,  400,  500,  600 , 700,  800, 90, 1000,  1100]])
 
 aaa = aaa.transpose()   # (2, 10) -> (10, 2)
 print(aaa.shape)
+print(aaa)
 
 def outliers(data_out):
   quartile_1, q2, quartile_3 = np.percentile(data_out, [25, 50, 75])
