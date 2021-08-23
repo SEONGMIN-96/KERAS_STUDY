@@ -100,7 +100,7 @@ print('val_acc :', loss[1])
 val_loss : 0.5033663511276245
 val_acc : 0.8106796145439148
 
-전의 학습 결과 (InceptionResNetV2)
+전이 학습 결과 (InceptionResNetV2)
 val_loss : 0.36428266763687134
 val_acc : 0.9223300814628601
 '''

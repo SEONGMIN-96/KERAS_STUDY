@@ -117,7 +117,7 @@ after binary_cross
 val_loss : 0.8219519257545471
 val_acc : 0.6450815796852112
 
-전의 학습 결과 (InceptionResNetV2)
+전이 학습 결과 (InceptionResNetV2)
 val_loss : 176.46202087402344
 val_acc : 0.5437468886375427
 

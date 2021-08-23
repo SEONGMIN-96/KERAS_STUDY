@@ -121,7 +121,7 @@ val_loss : 1.4559051990509033
 val_acc : 0.6027190089225769
 predict : [[0.53685796]]
 
-전의 학습 결과 (InceptionResNetV2)
+전이 학습 결과 (InceptionResNetV2)
 val_loss : 0.6815957427024841
 val_acc : 0.5951661467552185
 predict : [[0.50862426]]

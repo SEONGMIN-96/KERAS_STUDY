@@ -15,14 +15,15 @@ print(x.shape)      # (70000, 28, 28)
 x = x.reshape(70000, 28*28)
 
 # pca = PCA(n_components=28*28)
-pca = PCA(n_components=154)
+pca = PCA(n_components=784)
 
 x = pca.fit_transform(x)
 
-# pcr_EVR = pca.explained_variance_ratio_
-# print("pcr_EVR :", pcr_EVR)
+pcr_EVR = pca.explained_variance_ratio_
+# print("pcr_EVR :\n", pcr_EVR)
 
-# cumsum = np.cumsum(pcr_EVR)
-# print("pcr_EVR의 연속 합 :", cumsum)
+cumsum = np.cumsum(pcr_EVR)
+# print("pcr_EVR의 연속 합 :\n", cumsum)
 
-# print("pcr_EVR 0.95를 위한 columns개수 :", np.argmax(cumsum >= 0.95)+1)
+print("pcr_EVR 0.95를 위한 columns개수 :", np.argmax(cumsum >= 0.95)+1)
+# pcr_EVR 0.95를 위한 columns개수 : 154
