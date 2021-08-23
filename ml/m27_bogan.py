@@ -27,5 +27,14 @@ print(ts)
 ts_intp_linear = ts.interpolate()
 print(ts_intp_linear)
 
+'''
+2021-08-13     1.000000
+2021-08-14     3.333333
+2021-08-15     5.666667
+2021-08-16     8.000000
+2021-08-17    10.000000
+dtype: float64
+'''
+
 dd = Series([1, np.nan, np.nan, 4, 10]).interpolate()   # 앞뒤 수에 영향을 받음 (앞뒤가 이상치라면?)
 print(dd) 
