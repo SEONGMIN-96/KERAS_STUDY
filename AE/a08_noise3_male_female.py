@@ -79,7 +79,7 @@ def autoencoder_deep(hidden_layer_size):
     model01.add(MaxPool2D())
     model01.add(Conv2D(filters=512, kernel_size=(1,1), activation='relu'))
     model01.add(UpSampling2D())
-    model01.add(Conv2D(filters=1, kernel_size=(1,1), activation='sigmoid'))
+    model01.add(Conv2D(filters=3, kernel_size=(1,1), activation='sigmoid'))
     return model01
 
 model = autoencoder_deep(hidden_layer_size=256)
@@ -93,7 +93,7 @@ model = autoencoder_deep(hidden_layer_size=256)
 es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
 
 model.compile(loss='mse', optimizer='adam', metrics=['acc'])
-model.fit(x_train_noised, x_train, epochs=50, batch_size=16, verbose=1,
+model.fit(x_train_noised, x_train, epochs=50, batch_size=32, verbose=1,
           callbacks=[es], validation_split=0.2
 )
 
