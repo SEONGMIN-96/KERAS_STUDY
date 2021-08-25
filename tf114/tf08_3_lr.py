@@ -21,7 +21,7 @@ predict = x_test * W + b
 
 loss = tf.reduce_mean(tf.square(hypothesis - y_train)) # mse
 
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.17338)
 train = optimizer.minimize(loss)
 
 sess = tf.Session()
@@ -29,7 +29,7 @@ sess.run(tf.global_variables_initializer())
 
 for step in range(101):
     _, loss_val, W_val, b_val, predict_val = sess.run([train, loss, W, b, predict],
-                    feed_dict={x_train:[1,2,3], y_train:[3,5,7], x_test:[6,7,8]}
+                    feed_dict={x_train:[1,2,3], y_train:[3,5,7], x_test:[5,6]}
     )
     if step % 20 ==0:
         # print(step, sess.run(loss), sess.run(W), sess.run(b))
