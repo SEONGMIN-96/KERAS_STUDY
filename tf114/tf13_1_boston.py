@@ -16,7 +16,7 @@ b = tf.Variable(tf.random_normal([1]))
 hypothesis = tf.add(tf.matmul(x, w), b)
 
 loss = tf.reduce_mean(tf.square(y-hypothesis))
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.000001)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0e-9)
 train = optimizer.minimize(loss)
 
 session = tf.Session()
