@@ -84,4 +84,6 @@ y_test = np.argmax(y_test, axis=1)
 
 print('acc_score :', accuracy_score(y_test, y_pred))
 
+# acc_score : 0.098
+
 sess.close()
