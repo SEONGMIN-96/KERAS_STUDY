@@ -28,13 +28,16 @@ y = tf.placeholder(tf.float32, [None, 10])
 
 # 모델구성
 
-w1 = tf.get_variable('w1', shape=[3, 3, 1, 32]) # shape = [filter, chanel, output]
+w1 = tf.get_variable('w1', shape=[3, 3, 1, 32]) # shape = [kernel_size, chanel(input), filter(output)]
 L1 = tf.nn.conv2d(x, w1, strides=[1, 1, 1, 1], padding='SAME')
 
-model = Sequential
-model.add(Conv2D(filters=32, kernel_size=(3,3), strides=1,
-          padding='same', input_shape=(28, 28, 1)    
-))
+print(w1)   # (3, 3, 1, 32)
+print(L1)   # (?, 28, 28, 32)
+
+# model = Sequential
+# model.add(Conv2D(filters=32, kernel_size=(3,3), strides=1,
+#           padding='same', input_shape=(28, 28, 1)    
+# ))
 
 # get_vaiable 설명코드
 
