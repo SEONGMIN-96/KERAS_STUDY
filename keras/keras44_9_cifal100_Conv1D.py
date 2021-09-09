@@ -1,4 +1,4 @@
-from tensorflow.keras.datasets import cifar100
+from tensorflow.keras.datasets import cifar100, cifar10
 import numpy as np
 import matplotlib.pyplot as plt
 
