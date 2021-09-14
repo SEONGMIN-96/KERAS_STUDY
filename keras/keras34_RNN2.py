@@ -19,7 +19,7 @@ model.add(SimpleRNN(10, activation='relu', input_length=3, input_dim=1))
 model.add(Dense(32, activation='relu'))     # timesteps       feature
 model.add(Dense(32, activation='relu'))
 model.add(Dense(64, activation='relu'))
-model.add(Dense(128, activation='relu'))
+model.add(Dense(256, activation='relu'))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
