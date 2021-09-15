@@ -35,7 +35,7 @@ from tensorflow.keras.layers import Conv2D, Flatten, Dense, MaxPool2D
 
 model = Sequential()
 model.add(Conv2D(30, kernel_size=(2, 2), padding='same', input_shape=(28, 28, 1)))
-model.add(Conv2D(50, (3, 3), activation='relu'))
+model.add(Conv2D(60, (3, 3), activation='relu'))
 model.add(MaxPool2D())
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
