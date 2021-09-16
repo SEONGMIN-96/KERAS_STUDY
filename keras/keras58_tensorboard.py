@@ -26,7 +26,7 @@ enc = OneHotEncoder()
 y_train = enc.fit_transform(y_train).toarray()
 y_test = enc.fit_transform(y_test).toarray()
 
-# print(np.unique(y_train)) # [0 1 2 3 4 5 6 7 8 9]
+# print(np.unique(y_train)) ## [0 1 2 3 4 5 6 7 8 9]
 
 # 2. 모델 구성
 
