@@ -40,6 +40,7 @@ model.add(MaxPool2D())
 model.add(Flatten())
 model.add(Dense(254, activation='relu'))
 model.add(Dense(254, activation='relu'))
+model.add(Dense(254, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
