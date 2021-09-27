@@ -14,7 +14,7 @@ model = ak.StructuredDataRegressor(overwrite=True, max_trials=1)
 
 # 3. 훈련
 
-model.fit(x, y, epochs=2, validation_split=0.2)
+model.fit(x, y, epochs=2, validation_split=0.25)
 
 # 4. 평가
 
