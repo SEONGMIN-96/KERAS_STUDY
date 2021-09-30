@@ -63,7 +63,7 @@ y_data = np.load('./_save/_npy/k59_5_men_women_y.npy')
 # train_test_split 활용
 
 x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
-        train_size=0.8, shuffle=True, random_state=66
+        train_size=0.8, shuffle=True, random_state=67
 )
 
 # 내 사진 데이터를 불러와서 수치화한다.
