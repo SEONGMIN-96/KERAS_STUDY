@@ -27,6 +27,7 @@ model.add(vgg16)
 # model.add(GlobalAveragePooling2D())
 model.add(Flatten())
 model.add(Dense(100))
+model.add(Dense(100))
 model.add(Dense(100, activation='softmax'))
 
 model.summary()
