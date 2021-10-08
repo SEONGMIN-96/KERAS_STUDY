@@ -44,7 +44,7 @@ print(randidx.shape)        # (50000,)
 x_augmented = x_train[randidx].copy()
 y_augmented = y_train[randidx].copy()
 
-# 5만개의 데이터중 무작위로 5만개의 데이터를 뽑기 위한 과정
+# 5만개의 데이터중 무작위로 5만개의 데이터를 뽑기 위한 과정##
 
 x_augmented = x_augmented.reshape(x_augmented.shape[0], 32, 32, 3)
 x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
