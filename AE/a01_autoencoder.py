@@ -25,6 +25,7 @@ decoded = Dense(784, activation='sigmoid')(encoded)
 autoencoder = Model(input_img, decoded)
 
 # autoencoder.summary()
+# autoencoder.summary()
 
 # autoencoder.compile(optimizer='adam', loss='mse')
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
