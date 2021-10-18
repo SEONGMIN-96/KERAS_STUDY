@@ -35,7 +35,8 @@ input1 = Input(shape=(3,))
 dense1 = Dense(10, activation='relu', name='dense1')(input1)
 dense2 = Dense(7, activation='relu', name='dense2')(dense1)
 dense3 = Dense(5, activation='relu', name='dense3')(dense2)
-output1 = Dense(4, name='output1')(dense3)
+dense4 = Dense(5, activation='relu', name='dense3')(dense3)
+output1 = Dense(4, name='output1')(dense4)
 
 # 2-2. 모델2
 
