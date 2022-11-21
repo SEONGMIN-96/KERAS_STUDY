@@ -1,3 +1,3 @@
 # ML_BASIC_STUDY
 
-##### tensorflow basic code
+##### tensorflow & torch basic code
